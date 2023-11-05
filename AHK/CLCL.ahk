@@ -18,7 +18,7 @@ SetBatchlines, -1 ; Determines the script execution speed (affects CPU usage) an
 Process, Priority, , High ; high priority for the script =ru= приоритет высокий для скрипта
 ; −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
 ; Program language (EN or RU or JP) =ru= язык программы (EN или RU или JP)
-ProgramLanguage:="RU" ; !!! if not Russian, then download the files CLCL https://github.com/AndreyKaiu/CLCL-EN-RU-JP-Plugins/blob/main/To-the-website/EN/clcl_all_plugins_Ver_2_1_3_3_EN.zip 
+ProgramLanguage:="EN" ; !!! if not Russian, then download the files CLCL https://github.com/AndreyKaiu/CLCL-EN-RU-JP-Plugins/blob/main/To-the-website/EN/clcl_all_plugins_Ver_2_1_3_3_EN.zip 
 ; FOR JP https://github.com/AndreyKaiu/CLCL-EN-RU-JP-Plugins/blob/main/To-the-website/JP/clcl_all_plugins_Ver_2_1_3_3_JP.zip
 ; −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
 ; backup settings =ru= настройки резервного копирования 
