@@ -12,11 +12,11 @@ MarkdownList(text,m) {
 	Loop Parse, text, `r, `n
 	{
 		If m=1
-			out.="- " RegExReplace(A_LoopField,"^\s+") "`r`n`r`n"
+			out.="- " RegExReplace(A_LoopField,"^\s+") "`r`n"
 		If m=2
-			out.=A_Index ". " RegExReplace(A_LoopField,"^\s+") "`r`n`r`n"
+			out.=A_Index ". " RegExReplace(A_LoopField,"^\s+") "`r`n"
 		If m=3
-			out.="- [ ] " RegExReplace(A_LoopField,"^\s+") "`r`n`r`n"
+			out.="- [ ] " RegExReplace(A_LoopField,"^\s+") "`r`n"
 		If m=0
 			out.=RegExReplace(A_LoopField,"^(- +\[( |x)]|-|\d+.) ") "`r`n"
 	}
