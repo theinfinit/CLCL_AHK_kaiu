@@ -6,29 +6,29 @@ CoordMode Mouse
 CoordMode Cursor
 #NoTrayIcon
 
-;========== Настройки =============
-sound:=1 ; звук при захвате буфера
-trim:=1 ; обрезка начальных и конечных пробелов по умолчанию
-delete_dup:=1 ; удаление дупликатов
-noclose:=1 ; не закрывть окно при копировании заметок из графического интерфейса
-sep_list:="\r\n|\r\n\r\n|\r\n\r\n\r\n|\r\n=======================\r\n|\r\n\r\n\t\t\t--- \i ---\r\n|\r\n\r\n### [\h](\u)\r\n| <...> " ; разделители (смотри ReadMe)
-max_empty:=2 ; - максимальное число пустых строк в скопированном тексте
-header_path:=0 ; преобразовывать заголовки, содержащие полные пути к имени файла с расширением (1) или без (2)
-header_app:=0 ; удалять имя приложения из заголовка, прописанное в конце через тире
-logs:="Logs" ; папка логирования захватов (пусто - без логирования)
+;========== Configuration =============
+sound:=1 ; enable sound when capturing the buffer
+trim:=1 ; by default trim leading and ending spaces
+delete_dup:=1 ; delete duplicates
+noclose:=1 ; do not close the window when copying notes from the graphic interface
+sep_list:="\r\n|\r\n\r\n|\r\n\r\n\r\n|\r\n=======================\r\n|\r\n\r\n\t\t\t--- \i ---\r\n|\r\n\r\n### [\h](\u)\r\n| <...> " ; separators (see ReadMe)
+max_empty:=2 ; - maximum number of empty lines in copied text
+header_path:=0 ; convert headers containing full paths to filename with extension (1) or without (2)
+header_app:=0 ; remove application name from header, written at the end through a dash
+logs:="Logs" ; logging folder for captures (empty - no logging)
 
 ;=======================================================
-title_add:="буфера обмена"
+title_add:="clipboard"
 Loop 2
 {
 	If (A_Args[A_Index]~="-\d+")
 		sep_n:=RegExReplace(A_Args[A_Index],"^-")
 	Else If A_Args[A_Index]="-k"
-		k_copy:=1, title_add:="по горячей клавише (-k)"
+		k_copy:=1, title_add:="triggered by hotkey (-k)"
 	Else If A_Args[A_Index]="-m"
-		m_copy:=1, title_add:="многстраничный (-m)"
+		m_copy:=1, title_add:="multi-page capture (-m)"
 	Else If A_Args[A_Index]="-s"
-		s_copy:=1, title_add:="выделенного текста (-s)"
+		s_copy:=1, title_add:="of selected text (-s)"
 }
 If !sep_n
 	sep_n:=1
@@ -174,18 +174,18 @@ Gui Font, s10
 Gui Color, 72A0C1
 Gui Add, ListView, vlistvar x15 w800 h500 Grid -Multi NoSortHdr Checked 0x2000, N|Text
 LV_ModifyCol(1,"50 Center")
-Gui Add, Button, x55 y+10 w350 h28 gMoveDown, Смещение вниз
-Gui Add, Button, x+20 yp wp hp gMoveUp, Смещение вверх
-Gui Add, Text, x65 y+10 +0x200, Разделитель:
+Gui Add, Button, x55 y+10 w350 h28 gMoveDown, Move Down
+Gui Add, Button, x+20 yp wp hp gMoveUp, Move Up
+Gui Add, Text, x65 y+10 +0x200, Separator:
 Gui Add, ComboBox, x200 yp w575 vsep, % sep_list
-Gui Add, CheckBox, x65 y+10 vtrim, Исключение дубликатов
-Gui Add, CheckBox, x360 yp vdelete_dup, Обрезка начальных и конечных пробелов
-Gui Add, Button, x55 y+10 w350 h28 gCopyFIFO, Копирование FIFO
-Gui Add, Button, x+20 yp wp hp gCopyFILO, Копирование FILO
+Gui Add, CheckBox, x65 y+10 vtrim, Exclude Duplicates
+Gui Add, CheckBox, x360 yp vdelete_dup, Trim Spaces at Both Ends
+Gui Add, Button, x55 y+10 w350 h28 gCopyFIFO, Copy in 'First In First Out' Order ▼
+Gui Add, Button, x+20 yp wp hp gCopyFILO, Copy in 'First In Last Out' Order ▲
 GuiControl,, Button3, % delete_dup
 GuiControl,, Button4, % trim
 GuiControl, Choose, Edit1, % sep_n
-Gui Show, Minimize, % "Захват " title_add
+Gui Show, Minimize, % "Capture " title_add
 Return
 
 GuiClose:
@@ -263,13 +263,13 @@ StartCapture:
 	stop:=0
 	Return
 
->^vk56::  ; RCtrl+V - вставка в прямом порядке и выход
+>^vk56::  ; RCtrl+V - trigger paste operation in the original order and exit
 	hkey:=1
 	gosub CopyFIFO
 	Send ^{vk56}
 	ExitApp
 	
->^>+vk56:: ; RCtrl+RShift+V - вставка в обратном порядке и выход
+>^>+vk56:: ; RCtrl+RShift+V - trigger paste operation in reverse order and exit
 	hkey:=1
 	gosub CopyFILO
 	Send ^{vk56}
